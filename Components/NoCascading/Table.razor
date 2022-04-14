@@ -1,0 +1,31 @@
+﻿<table class="table">
+    <thead>
+        <tr>
+            @foreach (var item in Columns)
+            {
+                <th>@item</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <RowCollection ParentTable="@this" 
+                       Data="@Data"
+                       Columns="@Columns"
+                       OnClick="@RefreshComponent">
+        </RowCollection>
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<WeatherForecast> Data { get; set; }
+
+    [Parameter]
+    public List<string> Columns { get; set; }
+
+    Task RefreshComponent()
+    {
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+}

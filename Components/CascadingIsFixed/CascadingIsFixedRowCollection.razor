@@ -1,0 +1,23 @@
+﻿@foreach (var item in Data)
+{
+    <CascadingValue Value="@this" IsFixed="true">
+        <CascadingIsFixedRow Item="@item" 
+                             Columns="@Columns"
+                             OnClick="@OnClick">
+        </CascadingIsFixedRow>
+    </CascadingValue>
+}
+
+@code {
+    [CascadingParameter]
+    public CascadingIsFixedTable ParentTable { get; set; }
+
+    [Parameter]
+    public List<WeatherForecast> Data { get; set; }
+
+    [Parameter]
+    public List<string> Columns { get; set; }
+
+    [Parameter]
+    public Func<Task> OnClick { get; set; }
+}

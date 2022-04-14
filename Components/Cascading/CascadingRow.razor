@@ -1,0 +1,39 @@
+﻿<tr style="@rowStyle">
+    @foreach (var item in Columns)
+    {
+        <CascadingValue Value="this">
+            <CascadingCell Item="@Item" 
+                           Field="@item"
+                           OnClick="@OnCellClick">
+            </CascadingCell>
+        </CascadingValue>
+    }
+</tr>
+
+@code {
+    private bool isSelected = false;
+
+    private string rowStyle => isSelected ? "background-color: lightblue;" : "";
+
+    [CascadingParameter]
+    public CascadingTable ParentTable { get; set; }
+
+    [CascadingParameter]
+    public CascadingRowCollection ParentRowCollection { get; set; }
+
+    [Parameter]
+    public WeatherForecast Item { get; set; }
+
+    [Parameter]
+    public List<string> Columns { get; set; }
+
+    [Parameter]
+    public Func<Task> OnClick { get; set; }
+
+    Task OnCellClick()
+    {
+        isSelected = !isSelected;
+
+        return OnClick.Invoke();
+    }
+}

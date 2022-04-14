@@ -1,0 +1,33 @@
+﻿@page "/no-cascading"
+
+@inject WeatherForecastService WeatherForecastService
+
+<button @onclick="@(() => Visible = !Visible)">Toggle Table</button>
+
+@if (Forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (Visible)
+    {
+        <Table Data="@Forecasts" Columns="@Columns"></Table>
+    }
+}
+
+@code {
+    public bool Visible { get; set; } = true;
+    private List<WeatherForecast> Forecasts { get; set; } = new();
+    public List<string> Columns { get; set; } = new List<string>
+    { "Date", "TemperatureC", "TemperatureF", "Summary", "Date", "TemperatureC", "TemperatureF", "Summary", "Date", "TemperatureC",
+      "Date", "TemperatureC", "TemperatureF", "Summary", "Date", "TemperatureC", "TemperatureF", "Summary", "Date", "TemperatureC" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Forecasts.Any())
+        {
+            Forecasts = await WeatherForecastService.GetForecastAsync(DateTime.UtcNow);
+        }
+    }
+}

@@ -1,0 +1,37 @@
+﻿<td @onclick="@(() => OnClick.Invoke())">
+    @switch (Field)
+    {
+        case "Date":
+            @Item.Date.ToShortDateString()
+            break;
+        case "TemperatureC":
+            @Item.TemperatureC
+            break;
+        case "TemperatureF":
+            @Item.TemperatureF
+            break;
+        case "Summary":
+            @Item.Summary
+            break;
+    }
+</td>
+
+@code {
+    [Parameter]
+    public Table ParentTable { get; set; }
+
+    [Parameter]
+    public RowCollection ParentRowCollection { get; set; }
+
+    [Parameter]
+    public Row ParentRow { get; set; }
+
+    [Parameter]
+    public WeatherForecast Item { get; set; }
+
+    [Parameter]
+    public string Field { get; set; }
+
+    [Parameter]
+    public Func<Task> OnClick { get; set; }
+}
